@@ -1,0 +1,37 @@
+<md-dialog class="md-padding card" style="width: 400px">
+    <form novalidate name="fakturaForm" layout="column">
+        <md-dialog-content style="padding-top: 30px">
+            <label>Kupac</label>
+            <md-autocomplete
+                    md-selected-item="faktura.podaciOKupcu"
+                    md-search-text="searchText"
+                    md-items="poslovniPartner in queryPoslovniPartneri(searchText)"
+                    md-item-text="poslovniPartner.naziv"
+                    md-min-length="0"
+                    placeholder="Traži kupca...">
+                <md-item-template>
+                    <span class="item-title" style="display: block; line-height:1">
+                        <span><strong>{{poslovniPartner.naziv}}</strong></span>
+                        </span>
+                    <span class="item-metadata" style="display: block; padding-bottom: 3px;line-height: 2">
+                        <span style="padding-right: 10px">
+                            Adresa: {{poslovniPartner.adresa}}
+                        </span>
+                        <span style="padding-right: 10px">
+                            PIB: {{poslovniPartner.pib}}
+                        </span>
+                    </span>
+                </md-item-template>
+                <md-not-found>
+                    Nije pronađen kupac sa nazivom, adresom ili PIB-om "{{searchText}}".
+                </md-not-found>
+            </md-autocomplete>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="close()">Nazad</md-button>
+            <md-button type="submit" class="md-primary md-raised" ng-click="submit()"
+                       ng-disabled="businessPartnerForm.$invalid || faktura.podaciOKupcu == null">Sačuvaj
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

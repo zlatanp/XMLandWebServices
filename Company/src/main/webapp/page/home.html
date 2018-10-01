@@ -1,0 +1,60 @@
+<div>
+    <md-content>
+        <md-toolbar class="stay-top" ng-show="!showSearch">
+            <div class="md-toolbar-tools">
+                <h2><span>{{zaposleni.tpodaciSubjektDTO.naziv}}</span></h2>
+                <md-menu>
+                    <md-button class="md-raised" ng-click="$mdOpenMenu()">
+                        Izvodi
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click = "kreirajZahtevZaIzvod()">
+                                <md-icon md-svg-src="image/ic_get_app_black_24px.svg"></md-icon>
+                                Preuzmi izvod
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click = "goToIzvodi()">
+                                <md-icon md-svg-src="image/ic_list_black_24px.svg"></md-icon>
+                                Prikaži izvode
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-menu>
+                    <md-button class="md-raised" ng-click="$mdOpenMenu()">
+                        Fakture
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button ng-click = "goToFaktureDobavljac()">
+                                <md-icon md-svg-src="image/ic_list_black_24px.svg"></md-icon>
+                                Dobavljac
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button ng-click = "goToFaktureKupac()">
+                                <md-icon md-svg-src="image/ic_list_black_24px.svg"></md-icon>
+                                Kupac
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-button class="md-raised" ng-click="goToNaloziDuznik()">
+                    <md-icon md-svg-src="image/ic_list_black_24px.svg"></md-icon>
+                    Nalozi
+                </md-button>
+                <span flex></span>
+                <h3 class="toolbar-item"><span>{{zaposleni.ime}} {{zaposleni.prezime}}</span></h3>
+                <md-button class="md-raised" ng-click="logout()">
+                    Logout
+                </md-button>
+            </div>
+        </md-toolbar>
+        <section id="container" class="page active">
+            <ui-view></ui-view>
+        </section>
+
+    </md-content>
+</div>

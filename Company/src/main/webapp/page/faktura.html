@@ -1,0 +1,73 @@
+<div class="container">
+    <div layout="column">
+        <div layout="row">
+            <h3>Fakture - {{uloga}}</h3>
+        </div>
+        <div layout="row">
+            <md-button class = "md-raised" ng-click="addFaktura()" ng-if = "uloga == 'dobavljac'">
+                Kreiraj zaglavlje fakture
+            </md-button>
+        </div>
+        <md-divider></md-divider>
+        <md-card ng-class="{'md-whiteframe-4dp':hovering}"
+                 ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-if = "fakture.length > 0">
+            <md-table-container>
+                <table md-table>
+                    <thead md-head md-order="query.order">
+                    <tr md-row>
+                        <th md-column><span>Broj računa</span></th>
+                        <th md-column><span>Datum računa</span></th>
+                        <th md-column><span>Id poruke</span></th>
+                        <th md-column><span>Iznos za uplatu</span></th>
+                        <th md-column><span>Oznaka valute</span></th>
+                        <th md-column><span>Dobavljač</span></th>
+                        <th md-column><span>Kupac</span></th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row ng-repeat="faktura in fakture | limitTo: query.limit:(query.page-1) * query.limit">
+                        <td md-cell ng-click="prikaziDetalje(faktura)">{{faktura.brojRacuna}}</td>
+                        <td md-cell ng-click="prikaziDetalje(faktura)">{{faktura.datumRacuna | date: 'dd-MM-yyyy'}}</td>
+                        <td md-cell ng-click="prikaziDetalje(faktura)">{{faktura.idPoruke}}</td>
+                        <td md-cell ng-click="prikaziDetalje(faktura)">{{faktura.iznosZaUplatu}}</td>
+                        <td md-cell ng-click="prikaziDetalje(faktura)">{{faktura.oznakaValute}}</td>
+                        <td md-cell ng-click="prikaziDetalje(faktura)">{{faktura.podaciODobavljacu.naziv}}</td>
+                        <td md-cell ng-click="prikaziDetalje(faktura)">{{faktura.podaciOKupcu.naziv}}</td>
+                        <td md-cell>
+                            <md-button class = "md-raised" ng-click = "showStavke(faktura)">
+                                Prikaži stavke
+                            </md-button>
+                        </td>
+                        <td md-cell ng-if = "uloga == 'kupac' && !faktura.kreiranNalog">
+                            <md-button class = "md-raised" ng-click = "popuniNalog(faktura)">
+                                Kreiraj nalog
+                            </md-button>
+                        </td>
+                        <td md-cell ng-if = "uloga == 'kupac' && faktura.kreiranNalog">
+                            <i>Kreiran nalog</i>
+                        </td>
+                        <td md-cell ng-if = "uloga == 'dobavljac'">
+                            <md-button class = "md-raised" ng-click = "addStavke(faktura)" ng-disabled="faktura.poslato">
+                                Dodaj stavke
+                            </md-button>
+                        </td>
+                        <td md-cell ng-if = "uloga == 'dobavljac'" >
+                            <md-button class = "md-raised" ng-click = "sendFaktura(faktura)" ng-disabled="faktura.stavkaFakture.length == 0 || faktura.poslato">
+                                Pošalji fakturu
+                            </md-button>
+                        </td>
+                        <td md-cell>
+                            <md-button class = "md-raised" aria-label = "Generisi pdf" ng-click = "generisiPdf(faktura)">
+                                <md-icon md-svg-src="image/ic_picture_as_pdf_black_24px.svg"></md-icon>
+                            </md-button>
+                        </td>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{fakture.length}}" md-page-select
+                                 md-boundary-links="options.boundaryLinks" md-label="{page: 'Stranica:', rowsPerPage: 'redova po stranici', of: 'od'}">
+            </md-table-pagination>
+        </md-card>
+            <h3 class="text-center" ng-if = "fakture.length == 0">Trenutno ne postoji nijedna faktura.</h3>
+    </div>
+</div>
